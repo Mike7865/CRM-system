@@ -1,10 +1,11 @@
+/* eslint-disable no-empty */
 <template>
   <form class="card auth-card" @submit.prevent="submitHandler">
     <div class="card-content">
       <span class="card-title">Домашняя бухгалтерия</span>
       <div class="input-field">
-        <input 
-          id="email" 
+        <input
+          id="email"
           type="text"
           v-model.trim="email"
           :class="{
@@ -12,20 +13,18 @@
               ($v.email.$dirty && !$v.email.required) ||
               ($v.email.$dirty && !$v.email.email)
           }"
-        >
+        />
         <label for="email">Email</label>
-        <small 
+        <small
           class="helper-text invalid"
           v-if="$v.email.$dirty && !$v.email.required"
+          >Поле Email не должно быть пустым</small
         >
-          Поле Email не должно быть пустым
-        </small>
-        <small 
+        <small
           class="helper-text invalid"
           v-else-if="$v.email.$dirty && !$v.email.email"
+          >Введите корретный Email</small
         >
-          Введите корретный Email
-        </small>
       </div>
       <div class="input-field">
         <input
@@ -37,9 +36,9 @@
               ($v.password.$dirty && !$v.password.required) ||
               ($v.password.$dirty && !$v.password.minLength)
           }"
-        >
+        />
         <label for="password">Пароль</label>
-        <small 
+        <small
           class="helper-text invalid"
           v-if="$v.password.$dirty && !$v.password.required"
         >
@@ -55,11 +54,11 @@
       </div>
       <div class="input-field">
         <input
-          id="name" 
-          type="text" 
+          id="name"
+          type="text"
           v-model.trim="name"
-          :class="{invalid: $v.name.$dirty && !$v.name.required}"
-        >
+          :class="{ invalid: $v.name.$dirty && !$v.name.required }"
+        />
         <label for="name">Имя</label>
         <small
           class="helper-text invalid"
@@ -77,10 +76,7 @@
     </div>
     <div class="card-action">
       <div>
-        <button 
-          class="btn waves-effect waves-light auth-submit" 
-          type="submit"
-        >
+        <button class="btn waves-effect waves-light auth-submit" type="submit">
           Зарегистрироваться
           <i class="material-icons right">send</i>
         </button>
@@ -95,7 +91,7 @@
 </template>
 
 <script>
-import {email, required, minLength} from "vuelidate/lib/validators";
+import { email, required, minLength } from "vuelidate/lib/validators";
 
 export default {
   name: "register",
@@ -106,27 +102,29 @@ export default {
     agree: false
   }),
   validations: {
-    email: {email, required},
-    password: {required, minLength: minLength(6)},
-    name: {required},
-    agree: {checked: v => v}
+    email: { email, required },
+    password: { required, minLength: minLength(6) },
+    name: { required },
+    agree: { checked: v => v }
   },
   methods: {
-    submitHandler() {
+    async submitHandler() {
       if (this.$v.$invalid) {
-        this.$v.$touch()
-        return
+        this.$v.$touch();
+        return;
       }
 
       const formData = {
         email: this.email,
         password: this.password,
         name: this.name
-      }
+      };
 
-      console.log(formData);
-
-      this.$router.push("/");
+      try {
+        await this.$store.dispatch("register", formData);
+        this.$router.push("/");
+      // eslint-disable-next-line no-empty
+      } catch (e) {}
     }
   }
 };
