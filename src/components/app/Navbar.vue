@@ -5,7 +5,7 @@
         <a href="#" @click.prevent="$emit('click')">
           <i class="material-icons black-text">dehaze</i>
         </a>
-        <span class="black-text">{{ date | date("datetime")}}</span>
+        <span class="black-text">{{ date | date("datetime") }}</span>
       </div>
 
       <ul class="right hide-on-small-and-down">
@@ -20,7 +20,7 @@
             <i class="material-icons right">arrow_drop_down</i>
           </a>
 
-          <ul id='dropdown' class='dropdown-content'>
+          <ul id="dropdown" class="dropdown-content">
             <li>
               <router-link to="/profile" class="black-text">
                 <i class="material-icons">account_circle</i>Профиль
@@ -50,6 +50,11 @@ export default {
     async logout() {
       await this.$store.dispatch("logout");
       this.$router.push("/login?message=logout");
+    }
+  },
+  computed: {
+    name() {
+      return this.$store.getters.info.name;
     }
   },
   mounted() {
