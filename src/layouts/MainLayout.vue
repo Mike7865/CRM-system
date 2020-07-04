@@ -41,6 +41,17 @@ export default {
   components: {
     Navbar,
     Sidebar
+  },
+  computed: {
+    error() {
+      return this.$store.getters.error
+    }
+  },
+  watch: {
+    error(fbError) {
+      // eslint-disable-next-line no-undef
+      this.$error(messages[fbError.code] || "Что-то пошло не так");
+    }
   }
 };
 </script>
