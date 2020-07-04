@@ -10,7 +10,7 @@
           class="currency-line"
         >
           <span>
-            12.0 Р
+            120000 Р
           </span>
         </p>
       </div>
