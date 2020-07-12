@@ -4,11 +4,7 @@
       <div class="card-content white-text">
         <span class="card-title">Счет в валюте</span>
 
-        <p
-          v-for="cur of currencies" 
-          :key="cur"
-          class="currency-line"
-        >
+        <p v-for="cur of currencies" :key="cur" class="currency-line">
           <span>
             120000 Р
           </span>
@@ -26,7 +22,9 @@ export default {
   }),
   computed: {
     base() {
-      return this.$store.getters.info.bill / (this.rates['RUB'] / this.rates['EUR'])
+      return (
+        this.$store.getters.info.bill / (this.rates["RUB"] / this.rates["EUR"])
+      );
     }
   },
   methods: {

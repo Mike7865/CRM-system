@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="page-title">
-      <h3>{{'ProfileTitle' | localize}}</h3>
+      <h3>{{ "ProfileTitle" | localize }}</h3>
     </div>
 
     <form class="form" @submit.prevent="submitHandler">
@@ -10,26 +10,27 @@
           id="description"
           type="text"
           v-model="name"
-          :class="{invalid: $v.name.$dirty && !$v.name.required}"
-        >
-        <label for="description">{{'Name'|localize}}</label>
+          :class="{ invalid: $v.name.$dirty && !$v.name.required }"
+        />
+        <label for="description">{{ "Name" | localize }}</label>
         <small
           class="helper-text invalid"
           v-if="$v.name.$dirty && !$v.name.required"
-        >{{'Message_EnterName'|localize}}</small>
+          >{{ "Message_EnterName" | localize }}</small
+        >
       </div>
 
       <div class="switch">
         <label>
           English
-          <input type="checkbox" v-model="isRuLocale">
+          <input type="checkbox" v-model="isRuLocale" />
           <span class="lever"></span>
           Русский
         </label>
       </div>
 
       <button class="btn waves-effect waves-light" type="submit">
-        {{'Update'|localize}}
+        {{ "Update" | localize }}
         <i class="material-icons right">send</i>
       </button>
     </form>
@@ -41,43 +42,42 @@ import { mapGetters, mapActions } from "vuex";
 import { required } from "vuelidate/lib/validators";
 export default {
   data: () => ({
-    name: '',
+    name: "",
     isRuLocale: true
   }),
   validations: {
     name: { required }
   },
   mounted() {
-    this.name = this.info.name
-    this.isRuLocale = this.info.locale === 'ru-RU'
+    this.name = this.info.name;
+    this.isRuLocale = this.info.locale === "ru-RU";
     setTimeout(() => {
       // eslint-disable-next-line no-undef
-      M.updateTextFields()
-    })
+      M.updateTextFields();
+    });
   },
   computed: {
-    ...mapGetters(['info'])
+    ...mapGetters(["info"])
   },
   methods: {
-    ...mapActions(['updateInfo']),
+    ...mapActions(["updateInfo"]),
     async submitHandler() {
       if (this.$v.$invalid) {
-        this.$v.$touch()
-        return
+        this.$v.$touch();
+        return;
       }
 
       try {
         await this.updateInfo({
           name: this.name,
-          locale: this.isRuLocale ? 'ru-RU' : 'en-US'
-        })
-      // eslint-disable-next-line no-empty
+          locale: this.isRuLocale ? "ru-RU" : "en-US"
+        });
+        // eslint-disable-next-line no-empty
       } catch (e) {}
     }
   }
-}
+};
 </script>
-
 
 <style scoped>
 .switch {

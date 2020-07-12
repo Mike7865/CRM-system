@@ -1,14 +1,14 @@
 export default {
-  bind(el, {value}) {
+  bind(el, { value }) {
     // eslint-disable-next-line no-undef
-    M.Tooltip.init(el, {html: value})
+    M.Tooltip.init(el, { html: value });
   },
   unbind(el) {
     // eslint-disable-next-line no-undef
-    const tooltip = M.Tooltip.getInstance(el)
+    const tooltip = M.Tooltip.getInstance(el);
 
     if (tooltip && tooltip.destroy) {
-      tooltip.destroy()
+      tooltip.destroy();
     }
   }
-}
+};

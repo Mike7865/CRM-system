@@ -2,24 +2,27 @@
   <div>
     <div class="page-title">
       <h3>Планирование</h3>
-      <h4>{{info.bill | currency('RUB')}}</h4>
+      <h4>{{ info.bill | currency("RUB") }}</h4>
     </div>
 
     <Loader v-if="loading" />
 
-    <p class="center" v-else-if="!categories.length">Категорий пока нет. <router-link to="/categories">Добавить новую категорию</router-link></p>
+    <p class="center" v-else-if="!categories.length">
+      Категорий пока нет.
+      <router-link to="/categories">Добавить новую категорию</router-link>
+    </p>
 
     <section v-else>
       <div v-for="cat of categories" :key="cat.id">
         <p>
-          <strong>{{cat.title}}:</strong>
-          {{cat.spend | currency}} из {{cat.limit | currency}}
+          <strong>{{ cat.title }}:</strong>
+          {{ cat.spend | currency }} из {{ cat.limit | currency }}
         </p>
         <div class="progress" v-tooltip="cat.tooltip">
           <div
-              class="determinate"
-              :class="[cat.progressColor]"
-              :style="{width: cat.progressPercent + '%'}"
+            class="determinate"
+            :class="[cat.progressColor]"
+            :style="{ width: cat.progressPercent + '%' }"
           ></div>
         </div>
       </div>
@@ -28,7 +31,7 @@
 </template>
 
 <script>
-import {mapGetters} from "vuex";
+import { mapGetters } from "vuex";
 import currencyFilter from "../filters/currency.filter";
 export default {
   name: "Planning",
@@ -48,19 +51,18 @@ export default {
         .filter(r => r.categoryId === cat.id)
         .filter(r => r.type === "outcome")
         .reduce((total, record) => {
-          return total += +record.amount
-        }, 0)
+          return (total += +record.amount);
+        }, 0);
 
-      const percent = 100 * spend / cat.limit
-      const progressPercent = percent > 100 ? 100 : percent
-      const progressColor = percent < 60
-        ? "green"
-        : percent < 100
-          ? "yellow"
-          : "red"
-      
-      const tooltipValue = cat.limit - spend
-      const tooltip = `${tooltipValue < 0 ? "Превышение на" : "Осталось"} ${currencyFilter(Math.abs(tooltipValue))}`
+      const percent = (100 * spend) / cat.limit;
+      const progressPercent = percent > 100 ? 100 : percent;
+      const progressColor =
+        percent < 60 ? "green" : percent < 100 ? "yellow" : "red";
+
+      const tooltipValue = cat.limit - spend;
+      const tooltip = `${
+        tooltipValue < 0 ? "Превышение на" : "Осталось"
+      } ${currencyFilter(Math.abs(tooltipValue))}`;
 
       return {
         ...cat,
@@ -68,10 +70,10 @@ export default {
         progressColor,
         spend,
         tooltip
-      }
+      };
     });
 
-    this.loading = false
+    this.loading = false;
   }
-}
+};
 </script>

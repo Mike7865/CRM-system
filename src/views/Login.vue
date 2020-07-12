@@ -1,5 +1,4 @@
-/* eslint-disable no-empty */
-/* eslint-disable no-empty */
+/* eslint-disable no-empty */ /* eslint-disable no-empty */
 <template>
   <form class="card auth-card" @submit.prevent="submitHandler">
     <div class="card-content">
@@ -41,13 +40,13 @@
           }"
         />
         <label for="password">Пароль</label>
-        <small 
+        <small
           class="helper-text invalid"
           v-if="$v.password.$dirty && !$v.password.required"
         >
           Введите пароль
         </small>
-        <small 
+        <small
           class="helper-text invalid"
           v-else-if="$v.password.$dirty && !$v.password.minLength"
         >
@@ -58,10 +57,7 @@
     </div>
     <div class="card-action">
       <div>
-        <button
-          class="btn waves-effect waves-light auth-submit" 
-          type="submit"
-        >
+        <button class="btn waves-effect waves-light auth-submit" type="submit">
           Войти
           <i class="material-icons right">send</i>
         </button>
@@ -76,7 +72,7 @@
 </template>
 
 <script>
-import {email, required, minLength} from "vuelidate/lib/validators";
+import { email, required, minLength } from "vuelidate/lib/validators";
 import messages from "@/utils/messages";
 
 export default {
@@ -86,8 +82,8 @@ export default {
     password: ""
   }),
   validations: {
-    email: {email, required},
-    password: {required, minLength: minLength(6)}
+    email: { email, required },
+    password: { required, minLength: minLength(6) }
   },
   mounted() {
     if (messages[this.$route.query.message]) {
@@ -97,18 +93,18 @@ export default {
   methods: {
     async submitHandler() {
       if (this.$v.$invalid) {
-        this.$v.$touch()
-        return
+        this.$v.$touch();
+        return;
       }
       const formData = {
         email: this.email,
         password: this.password
-      }
+      };
 
       try {
-        await this.$store.dispatch("login", formData)
-        this.$router.push('/')
-      // eslint-disable-next-line no-empty
+        await this.$store.dispatch("login", formData);
+        this.$router.push("/");
+        // eslint-disable-next-line no-empty
       } catch (e) {}
     }
   }

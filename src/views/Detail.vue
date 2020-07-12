@@ -11,22 +11,25 @@
       </div>
       <div class="row">
         <div class="col s12 m6">
-          <div class="card" :class="{
-            'red': record.type === 'outcome',
-            'green': record.type === 'income'
-          }">
+          <div
+            class="card"
+            :class="{
+              red: record.type === 'outcome',
+              green: record.type === 'income'
+            }"
+          >
             <div class="card-content white-text">
-              <p>Описание: {{record.description}} </p>
-              <p>Сумма: {{record.amount | currency}} </p>
-              <p>Категория: {{record.categoryName}} </p>
+              <p>Описание: {{ record.description }}</p>
+              <p>Сумма: {{ record.amount | currency }}</p>
+              <p>Категория: {{ record.categoryName }}</p>
 
-              <small>{{record.date | date('datetime')}}</small>
+              <small>{{ record.date | date("datetime") }}</small>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <p class="center" v-else>Запись с id={{$route.params.id}} не найдена</p>
+    <p class="center" v-else>Запись с id={{ $route.params.id }} не найдена</p>
   </div>
 </template>
 
@@ -38,16 +41,19 @@ export default {
     loading: true
   }),
   async mounted() {
-    const id = this.$route.params.id
-    const record = await this.$store.dispatch("fetchRecordById", id)
-    const category = await this.$store.dispatch("fetchCategoryById", record.categoryId)
+    const id = this.$route.params.id;
+    const record = await this.$store.dispatch("fetchRecordById", id);
+    const category = await this.$store.dispatch(
+      "fetchCategoryById",
+      record.categoryId
+    );
 
     this.record = {
       ...record,
       categoryName: category.title
-    }
+    };
 
-    this.loading = false
+    this.loading = false;
   }
-}
+};
 </script>

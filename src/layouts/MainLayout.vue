@@ -31,7 +31,7 @@ import Sidebar from "../components/app/Sidebar";
 import messages from "../utils/messages";
 
 export default {
-  name: "Main-layout",
+  name: "main-layout",
   data: () => ({
     isOpen: true,
     loading: true

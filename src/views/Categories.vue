@@ -8,7 +8,7 @@
       <div class="row" v-else>
         <CategoryCreate @created="addNewCategory" />
 
-        <CategoryEdit 
+        <CategoryEdit
           v-if="categories.length"
           :categories="categories"
           :key="categories.length + updateCount"
@@ -33,21 +33,22 @@ export default {
   }),
   async mounted() {
     this.categories = await this.$store.dispatch("fetchCategories");
-    this.loading = false
+    this.loading = false;
   },
   components: {
-    CategoryCreate, CategoryEdit
+    CategoryCreate,
+    CategoryEdit
   },
   methods: {
     addNewCategory(category) {
       this.categories.push(category);
     },
     updateCategories(category) {
-      const idx = this.categories.findIndex(c => c.id === category.id)
+      const idx = this.categories.findIndex(c => c.id === category.id);
       this.categories[idx].title = category.title;
       this.categories[idx].limit = category.limit;
       this.updateCount++;
     }
   }
-}
+};
 </script>
